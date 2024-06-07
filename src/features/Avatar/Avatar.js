@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-export default function Avatar({ userId }) {
-  const [thumbnail, setThumbnail] = useState('')
+export default function Avatar({ profileStyle }) {
 
-  useEffect(() => {
-    // Generate a new random avatar URL
-    const randomAvatarUrl = `https://xsgames.co/randomusers/avatar.php?g=pixel`
-    setThumbnail(randomAvatarUrl)
-  }, [userId])
+  console.log(profileStyle);
+
+  const { initials, backgroundColor } = profileStyle;
 
   return (
-    <StyledAvatar
-      src={thumbnail}
-      alt="profile"
-    />
+    <StyledAvatar style={{ backgroundColor: backgroundColor }}>
+      <Initials>{initials}</Initials>
+    </StyledAvatar>
   );
 }
 
-const StyledAvatar = styled.img`
+const StyledAvatar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors.textParagraph};
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
-`
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+
+const Initials = styled.span`
+  display: block;
+`;

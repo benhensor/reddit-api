@@ -10,9 +10,6 @@ function App() {
 	const [currentTheme, setCurrentTheme] = useState(theme.lightTheme)
 	const [isSidebarVisible, setIsSidebarVisible] = useState(false)
 
-	const desktop = window.matchMedia('(min-width: 1199px)').matches
-	const tablet = window.matchMedia('(max-width: 768px)').matches
-
 	const toggleTheme = () => {
 		setCurrentTheme(
 			currentTheme === theme.lightTheme
@@ -30,7 +27,7 @@ function App() {
 			<ThemeProvider theme={currentTheme}>
 				<GlobalStyles />
 				<Header
-					tablet={tablet}
+					currentTheme={currentTheme.name}
 					toggleTheme={toggleTheme}
 					toggleAside={toggleAside}
 					isSidebarVisible={isSidebarVisible}

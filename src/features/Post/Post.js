@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import { toggleShowingComments, fetchComments } from '../../store/redditSlice';
 import Skeleton from 'react-loading-skeleton'
 import { TiMessage } from 'react-icons/ti'
 import { LuShare } from "react-icons/lu";
@@ -13,11 +15,20 @@ import moment from 'moment'
 import shortenNumber from '../../utils/shortenNumber'
 import Comment from '../Comment/Comment'
 import Avatar from '../Avatar/Avatar'
+import { getProfileStyle } from '../../utils/getProfileStyle';
 
 export default function Post(props) {
+	const dispatch = useDispatch()
 	const [voteValue, setVoteValue] = useState(0)
 
-	const { post, onToggleComments } = props
+	const { post, index } = props
+
+	const handleToggleComments = () => {
+    dispatch(toggleShowingComments(index));
+    if (!post.showingComments) {
+      dispatch(fetchComments(index, post.permalink));
+    }
+  };
 
 	/**
 	 * @param {number} newValue The new vote value
@@ -97,7 +108,7 @@ export default function Post(props) {
 					<PostContainer>
 						<PostHeader>
 							<Author>
-								<Avatar	userId={post.id}/>
+								<Avatar	profileStyle={getProfileStyle()}/>
 								<AuthorName>{post.author}</AuthorName>
 							</Author>
 							•
@@ -142,7 +153,7 @@ export default function Post(props) {
 									type="button"
 									$isActive={post.showingComments}
 									onClick={() =>
-										onToggleComments(post.permalink)
+										handleToggleComments(post.permalink)
 									}
 									aria-label="Show comments"
 								>
@@ -284,7 +295,7 @@ const Button = styled.button`
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: ${({ theme, $isActive }) => ($isActive ? theme.colors.branding : theme.colors.textParagraph)};
+	color: ${({ theme, $isActive }) => ($isActive ? theme.colors.success : theme.colors.textParagraph)};
 	display: flex;
 	align-items: center;
 	border-radius: var(--radius);

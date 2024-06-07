@@ -22,14 +22,6 @@ export default function Home () {
     dispatch(fetchPosts(selectedSubreddit));
   }, [dispatch, selectedSubreddit]);
 
-  const onToggleComments = (index) => {
-    const getComments = (permalink) => {
-      dispatch(fetchComments(index, permalink));
-    };
-
-    return getComments;
-  };
-
   if (isLoading) {
     return (
       <motion.div
@@ -75,7 +67,7 @@ export default function Home () {
         <Post
           key={post.id}
           post={post}
-          onToggleComments={onToggleComments(index)}
+          index={index}
         />
       ))}
     </>

@@ -20,6 +20,7 @@ const sharedStyles = {
 
 export const theme = {
   lightTheme: {
+    name: 'light',
     ...sharedStyles,
     colors: {
       background: '#FFFFFF',
@@ -45,6 +46,7 @@ export const theme = {
     }
   },
   darkTheme: {
+    name: 'dark',
     ...sharedStyles,
     colors: {
       background: '#0E1113',

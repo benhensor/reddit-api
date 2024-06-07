@@ -26,7 +26,7 @@ const StyledLabel = styled.label`
   text-indent: -9999px;  
   width: 4.1rem;  
   height: 3rem;  
-  background: ${({ theme, $checked }) => ($checked ? theme.colors.border :  theme.colors.buttonBackground)};  
+  background: ${({ theme, $checked }) => ($checked ? theme.colors.elementBackground :  theme.colors.buttonBackground)};  
   display: block;  
   border-radius: 1.5rem;  
   position: relative;
@@ -39,7 +39,7 @@ const StyledLabel = styled.label`
     transform: translateY(-50%);   
     width: 2.5rem;    
     height: 2.5rem;    
-    background: ${({ theme, $checked }) => ($checked ? theme.colors.white : theme.colors.black)};
+    background: ${({ theme, $checked }) => ($checked ? theme.colors.textParagraph : theme.colors.white)};
     border-radius: 90px;    
     transition: 0.3s;  
   }

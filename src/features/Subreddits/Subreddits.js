@@ -34,7 +34,7 @@ export default function Subreddits() {
               <img
                 src={
                   subreddit.icon_img ||
-                  `https://api.adorable.io/avatars/25/${subreddit.display_name}`
+                  `https://xsgames.co/randomusers/avatar.php?g=pixel&seed=${subreddit.display_name}`
                 }
                 alt={`${subreddit.display_name}`}
                 style={{ border: `3px solid ${subreddit.primary_color}` }}

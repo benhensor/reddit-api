@@ -5,19 +5,21 @@ import Avatar from '../Avatar/Avatar'
 import AddIcon from '../../components/Icons/AddIcon'
 import MoreVertIcon from '../../components/Icons/MoreVertIcon'
 
-export default function UserControls({ isTabletView, toggleTheme, handleMobileMenu }) {
+export default function UserControls({ isTabletView, toggleTheme, handleMobileMenu, profileStyle }) {
 
-  const DesktopControls = () => (
-    <>
-      <CreatePost><AddIcon/>Create Post</CreatePost>
-      <ToggleSwitch onClick={toggleTheme} />
-      <Avatar />
-    </>
-  )
+  const DesktopControls = () => {
+    return (
+      <>
+        <CreatePost><AddIcon/>Create Post</CreatePost>
+        <ToggleSwitch onClick={toggleTheme} />
+        <Avatar profileStyle={profileStyle} />
+      </>
+    )
+  }
 
   const TabletControls = () => (
     <>
-      <Avatar />
+      <Avatar profileStyle={profileStyle} />
       <MoreVertIcon onClick={handleMobileMenu}/>
     </>
   )

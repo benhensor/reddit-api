@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
 import Avatar from '../Avatar/Avatar';
+import { getProfileStyle } from '../../utils/getProfileStyle';
 
 
 export default function Comment({ comment }) {
@@ -10,8 +11,9 @@ export default function Comment({ comment }) {
   return (
     <CommentContainer>
       <Metadata>
-        <Avatar name={comment.author} />
+        <Avatar profileStyle={getProfileStyle()} />
         <Author>{comment.author}</Author>
+        •
         <CreatedTime>
           {moment.unix(comment.created_utc).fromNow()}
         </CreatedTime>
@@ -29,23 +31,24 @@ const CommentContainer = styled.div`
   transition: box-shadow 0.1s ease-in;
   border-radius: .4rem;
   &:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;;
+    box-shadow: 0 0 15px -3px rgba(0, 0, 0, 0.3),
+    0 0 6px -2px rgba(0, 0, 0, 0.05) !important;
   }
 `
 
 const Metadata = styled.div`
   display: flex;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1rem;
   align-items: center;
+  gap: 1rem;
 `
 
 const CreatedTime = styled.p`
-  margin-left: auto;
-  font-style: italic;
+  font-size: 1.2rem;
 `
 
 const Author = styled.p`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.buttonBackground};
+  cursor: pointer;
 `

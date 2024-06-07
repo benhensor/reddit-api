@@ -12,11 +12,11 @@ import { GrTarget } from "react-icons/gr";
 import { SlSettings } from "react-icons/sl";
 import { PiShieldPlus } from "react-icons/pi";
 
-export default function MobileMenu({ currentTheme, toggleTheme, username }) {
+export default function MobileMenu({ currentTheme, toggleTheme, username, profileStyle }) {
 
-  const isLightMode = currentTheme === 'lightTheme'
-  const mode = isLightMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/>
-  const modeText = isLightMode ? 'Light Mode' : 'Dark Mode'
+  const isLightMode = currentTheme === 'light'
+  const mode = isLightMode ? <MdOutlineDarkMode/> : <MdOutlineLightMode/> 
+  const modeText = isLightMode ? 'Dark Mode' : 'Light Mode'
 
   const MenuCard = ({icon, text}) => {
     return (
@@ -36,7 +36,7 @@ export default function MobileMenu({ currentTheme, toggleTheme, username }) {
     <Container>
       <MenuSection>
         <CardContainer>
-          <MenuCard icon={<Avatar/>} text='View Profile' />
+          <MenuCard icon={<Avatar profileStyle={profileStyle}/>} text='View Profile' />
         </CardContainer>
         <CardContainer>
           <MenuCard icon={<LuShirt/>} text='Edit Avatar' />

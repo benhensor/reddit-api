@@ -3,15 +3,15 @@ import styled from 'styled-components'
 
 export default function MenuIcon({ onClick, isSidebarVisible }) {
 	return (
-		<Container onClick={onClick}>
+		<MenuBars onClick={onClick}>
 			{Array.from({ length: 3 }).map((_, index) => (
-				<Bar key={index} $isOpen={isSidebarVisible} />
+				<Bar key={index} $isActive={isSidebarVisible} />
 			))}
-		</Container>
+		</MenuBars>
 	)
 }
 
-const Container = styled.div`
+const MenuBars = styled.div`
 	display: none;
 	@media only screen and (max-width: 768px) {
 		display: flex;
@@ -31,8 +31,8 @@ const Bar = styled.div`
 	transition: all 0.12s ease-in-out;
 	transform-origin: center;
 
-	${({ $isOpen }) =>
-		$isOpen &&
+	${({ $isActive }) =>
+		$isActive &&
 		`
     &:nth-child(1) {
       transform: translateY(7px) rotate(45deg);
