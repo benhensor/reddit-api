@@ -230,6 +230,7 @@ const Card = styled.div`
 const PostWrapper = styled.div`
 	display: flex;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+	padding: 1rem;
 `
 const PostContainer = styled.div`
 	width: 100%;

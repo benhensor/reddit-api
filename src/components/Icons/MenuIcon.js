@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 export default function MenuIcon({ onClick, isSidebarVisible }) {
+	
 	return (
 		<MenuBars onClick={onClick}>
 			{Array.from({ length: 3 }).map((_, index) => (

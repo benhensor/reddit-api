@@ -85,6 +85,6 @@ const Main = styled.main`
 		margin-left: 0; /* No space when sidebar is hidden */
 	}
 	@media (max-width: 768px) {
-		padding: 2rem 1rem;
+		padding: 2rem 0;
 	}
 `

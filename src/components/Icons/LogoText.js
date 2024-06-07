@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default function LogoText() {
+export default function LogoText({ onClick }) {
 	return (
 		<StyledLogoText
+			onClick={onClick}
 			viewBox="-0.001931647947148285 -0.5831467598558726 286.0572555076589 91.08314675985588"
 			xmlns="http://www.w3.org/2000/svg"
 			width="100%"

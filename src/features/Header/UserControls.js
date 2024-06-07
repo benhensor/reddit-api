@@ -34,7 +34,7 @@ export default function UserControls({ isTabletView, toggleTheme, handleMobileMe
 const Controls = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .4rem;
 `
 
 const CreatePost = styled.button`

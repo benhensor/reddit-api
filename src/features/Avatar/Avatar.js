@@ -3,8 +3,6 @@ import styled from 'styled-components'
 
 export default function Avatar({ profileStyle }) {
 
-  console.log(profileStyle);
-
   const { initials, backgroundColor } = profileStyle;
 
   return (
@@ -18,7 +16,7 @@ const StyledAvatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ theme }) => theme.colors.textParagraph};
+  border: 3px solid #646D73;
   border-radius: 50%;
   width: 3rem;
   height: 3rem;

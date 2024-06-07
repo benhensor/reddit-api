@@ -6,6 +6,8 @@ import {
   setSelectedSubreddit,
   selectSelectedSubreddit,
 } from '../../store/redditSlice';
+import Avatar from '../Avatar/Avatar';
+import { getProfileStyle } from '../../utils/getProfileStyle';
 
 export default function Subreddits() {
   const dispatch = useDispatch();
@@ -31,14 +33,15 @@ export default function Subreddits() {
               type="button"
               onClick={() => dispatch(setSelectedSubreddit(subreddit.url))}
             >
-              <img
-                src={
-                  subreddit.icon_img ||
-                  `https://xsgames.co/randomusers/avatar.php?g=pixel&seed=${subreddit.display_name}`
-                }
-                alt={`${subreddit.display_name}`}
-                style={{ border: `3px solid ${subreddit.primary_color}` }}
-              />
+              {subreddit.icon_img ? (
+                <img
+                  src={subreddit.icon_img}
+                  alt={`${subreddit.display_name}`}
+                  style={{ border: `3px solid ${subreddit.primary_color}` }}
+                />
+              ) : (
+                <Avatar profileStyle={getProfileStyle()} />
+              )}
               {subreddit.display_name}
             </button>
           </li>
@@ -69,12 +72,14 @@ const Card = styled.div`
     width: 100%;
     padding: 1.6rem;
     border-radius: .4rem;
+    gap: var(--spacing-1);
+    transition: .12s;
     .selected-subreddit {
       border-left: 5px solid var(--color-branding);
       background: var(--color-branding-transparent);
     }
     &:hover {
-      background: ${({ theme }) => theme.colors.onHover};
+      background: ${({ theme }) => theme.colors.elementBackgroundHover};
     }
   }
   ul {
@@ -86,9 +91,8 @@ const Card = styled.div`
     background: var(--color-branding-transparent);
   }
   img {
-    height: 25px;
-    width: 25px;
+    height: 3rem;
+    width: 3rem;
     border-radius: 50%;
-    margin-right: var(--spacing-1);
   }
 `

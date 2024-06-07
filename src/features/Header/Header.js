@@ -14,7 +14,7 @@ export default function Header({
 	currentTheme,
 	toggleTheme,
 	toggleAside,
-	setIsSidebarVisible,
+	isSidebarVisible,
 }) {
 	const dispatch = useDispatch()
 
@@ -56,15 +56,20 @@ export default function Header({
 		dispatch(setSearchTerm(searchTermLocal))
 	}
 
+	const handleRefresh = () => {
+		window.location.reload()
+		console.log('refreshed')
+	}
+
 	return (
 		<StyledHeader>
 			<Logo>
 				<MenuIcon
 					onClick={toggleAside}
-					isAsideVisible={setIsSidebarVisible}
+					isSidebarVisible={isSidebarVisible}
 				/>
-				<LogoFace />
-				<LogoText />
+				<LogoFace onClick={handleRefresh} />
+				<LogoText onClick={handleRefresh} />
 			</Logo>
 			<Search>
 				<label htmlFor="search"></label>
