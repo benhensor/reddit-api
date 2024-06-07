@@ -5,7 +5,7 @@ export default function ToggleSwitch ({ onClick }) {
   const [switchState, setSwitchState] = useState(true);
 
   const handleOnChange = () => {
-    setSwitchState(!switchState);
+    setSwitchState(prev => !prev);
     onClick();
   }
 
@@ -39,7 +39,7 @@ const StyledLabel = styled.label`
     transform: translateY(-50%);   
     width: 2.5rem;    
     height: 2.5rem;    
-    background: ${({ theme, $checked }) => ($checked ? theme.colors.black : theme.colors.white)};
+    background: ${({ theme, $checked }) => ($checked ? theme.colors.white : theme.colors.black)};
     border-radius: 90px;    
     transition: 0.3s;  
   }

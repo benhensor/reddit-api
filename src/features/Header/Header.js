@@ -5,24 +5,31 @@ import MenuIcon from '../../components/Icons/MenuIcon'
 import LogoFace from '../../components/Icons/LogoFace'
 import LogoText from '../../components/Icons/LogoText'
 import SearchIcon from '../../components/Icons/SearchIcon'
-import AddIcon from '../../components/Icons/AddIcon'
-import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch'
-import LoginButton from '../../components/Icons/LoginButton'
-import Avatar from '../../features/Avatar/Avatar'
-import MoreVertIcon from '../../components/Icons/MoreVertIcon'
+import UserControls from './UserControls'
 import MobileMenu from './MobileMenu'
 import { setSearchTerm } from '../../store/redditSlice'
-import { selectName, selectIsLoggedIn, setIsLoggedIn } from '../../store/userSlice'
 
 
-export default function Header({ tablet, currentTheme, toggleTheme, toggleAside, setIsSidebarVisible }) {
+export default function Header({ currentTheme, toggleTheme, toggleAside, setIsSidebarVisible }) {
 	const dispatch = useDispatch()
-	const username = useSelector(selectName)
-	const isLoggedIn = true
 
 	const [searchTermLocal, setSearchTermLocal] = useState('')
 	const searchTerm = useSelector((state) => state.reddit.searchTerm)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const [isTabletView, setIsTabletView] = useState(window.innerWidth <= 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTabletView(window.innerWidth <= 768)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
 	const handleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -69,22 +76,7 @@ export default function Header({ tablet, currentTheme, toggleTheme, toggleAside,
 						/>
 					</span>
 				</Search>
-				{!tablet ? (
-					<UserControls>
-						<ToggleSwitch onClick={toggleTheme} />
-						{!tablet ? <LoginButton onClick={() => dispatch(setIsLoggedIn(true))} /> : <Avatar name={username} />}
-					</UserControls>
-				) : (
-					<UserControls>
-						<CreatePost>
-							<AddIcon />
-							Create
-						</CreatePost>
-						<ToggleSwitch onClick={toggleTheme} />
-						<Avatar name={username} />
-						<MoreVertIcon onClick={handleMobileMenu} />
-					</UserControls>
-				)}
+				<UserControls isTabletView={isTabletView} toggleTheme={toggleTheme} handleMobileMenu={handleMobileMenu}/>
 				{isMobileMenuOpen && (
 					<MobileMenuContainer $isVisible={isMobileMenuOpen}>
 						<MobileMenu currentTheme={currentTheme} toggleTheme={toggleTheme} username={null}/>
@@ -168,46 +160,27 @@ const Search = styled.div`
 	}
 `
 
-const UserControls = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-`
-
-const CreatePost = styled.button`
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	padding: 1rem;
-	background-color: transparent;
-	color: ${({ theme }) => theme.colors.textParagraph};
-	border: none;
-	border-radius: 2rem;
-	font-size: 1.4rem;
-	cursor: pointer;
-	svg {
-		width: 2rem;
-		height: 2rem;
-		stroke: ${({ theme }) => theme.colors.textParagraph};
-	}
-	&:hover {
-		background-color: ${({ theme }) => theme.colors.elementBackground};
-	}
-
-`
-
 const MobileMenuContainer = styled.div`
 	position: fixed;
-	top: 5.1rem;
+	top: 6rem;
 	right: 0;
-	transform: translateX(${({ $isVisible }) => ($isVisible ? '0' : '-100%')});
+	transform: translateX(${({ $isVisible }) => ($isVisible ? '0' : '100%')});
 	width: 30rem;
+	overflow-y: auto;
+	border-left: 1px solid ${({ theme }) => theme.colors.border};
 	background-color: ${({ theme }) => theme.colors.menuBackground};
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
-	padding: 1rem;
 	transition: all 0.3s ease;
 	border-radius: 0 0 0 1rem;
 	z-index: 100;
+	transition: transform 0.3s ease-in-out;
+	@media (max-width: 1199px) {
+		transform: translateX(${({ $isVisible }) => ($isVisible ? '0' : '-100%')});
+ 	}
+	@media only screen and (max-width: 768px) {
+		display: flex;
+		top: 5rem;
+	}
 `

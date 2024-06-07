@@ -62,11 +62,6 @@ const PostLoading = () => {
 
 export default PostLoading;
 
-
-const PPost = styled.article`
-  width: 2ch !important;
-`
-
 const Post = styled.article`
   display: flex;
   background: var(--color-foreground);

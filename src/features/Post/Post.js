@@ -97,10 +97,7 @@ export default function Post(props) {
 					<PostContainer>
 						<PostHeader>
 							<Author>
-								<Avatar
-									name={post.author}
-									profile={post.thumbnail}
-								/>
+								<Avatar	userId={post.id}/>
 								<AuthorName>{post.author}</AuthorName>
 							</Author>
 							•
@@ -154,8 +151,12 @@ export default function Post(props) {
 								{shortenNumber(post.num_comments, 1)}
 							</ButtonContainer>
 							<ButtonContainer>
-								<Button>
-									<LuShare className='icon-action'/> Share
+								<Button
+									type="button"
+									aria-label="Share"
+								>
+									<LuShare className="icon-action" />
+									<p>Share</p>
 								</Button>
 							</ButtonContainer>
 						</PostDetails>
@@ -234,6 +235,7 @@ const Author = styled.span`
 	align-items: center;
 `
 const AuthorName = styled.span`
+	margin-left: var(--spacing-1);
 	font-size: 1em;
 	color: var(--color-branding);
 	font-weight: bold;
@@ -286,6 +288,13 @@ const Button = styled.button`
 	display: flex;
 	align-items: center;
 	border-radius: var(--radius);
+	> p {
+		margin-left: .4rem;
+		padding: .35rem;
+		font-weight: bold;
+		font-size: 1.6rem;
+	
+	}
 `
 const VoteValue = styled.p`
 	font-size: 1.6rem;

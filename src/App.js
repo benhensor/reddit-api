@@ -31,7 +31,6 @@ function App() {
 				<GlobalStyles />
 				<Header
 					tablet={tablet}
-					currentTheme={currentTheme.name}
 					toggleTheme={toggleTheme}
 					toggleAside={toggleAside}
 					isSidebarVisible={isSidebarVisible}
@@ -69,7 +68,6 @@ const Sidebar = styled.aside`
 	overflow-y: auto;
 	transition: transform 0.3s ease-in-out;
 	transform: translateX(${({ $isVisible }) => ($isVisible ? '0' : '-100%')});
-
 	@media (max-width: 1199px) {
 		transform: translateX(
 			${({ $isVisible }) => ($isVisible ? '0' : '-100%')}
