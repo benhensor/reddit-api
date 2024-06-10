@@ -72,7 +72,7 @@ export default function Post(props) {
 		if (post.errorComments) {
 			return (
 				<div>
-					<h3>Error loading comments</h3>
+					<ErrorMessage>Error loading comments</ErrorMessage>
 				</div>
 			)
 		}
@@ -317,4 +317,8 @@ const VoteValue = styled.p`
 			: $voteType === -1
 			? 'var(--color-alert)'
 			: 'inherit'};
+`
+
+const ErrorMessage = styled.h3`
+	color: ${({ theme }) => (theme.colors.alert)};
 `
