@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from './styles/Theme'
 import GlobalStyles from './styles/GlobalStyles'
@@ -7,16 +7,20 @@ import Header from './features/Header/Header'
 import Subreddits from './features/Subreddits/Subreddits'
 
 function App() {
-	const [currentTheme, setCurrentTheme] = useState(theme.lightTheme)
+	const [currentTheme, setCurrentTheme] = useState(localStorage.getItem('theme') === 'dark' ? theme.darkTheme : theme.lightTheme)
 	const [isSidebarVisible, setIsSidebarVisible] = useState(false)
 
-	const toggleTheme = () => {
-		setCurrentTheme(
-			currentTheme === theme.lightTheme
-				? theme.darkTheme
-				: theme.lightTheme
-		)
-	}
+	useEffect(() => {
+    localStorage.setItem('theme', currentTheme.name);
+  }, [currentTheme]);
+
+  const toggleTheme = () => {
+    setCurrentTheme(prevTheme => {
+      const newTheme = prevTheme === theme.lightTheme ? theme.darkTheme : theme.lightTheme;
+      localStorage.setItem('theme', newTheme.name); // Update localStorage immediately
+      return newTheme;
+    });
+  };
 
 	const toggleAside = () => {
 		setIsSidebarVisible(!isSidebarVisible)
