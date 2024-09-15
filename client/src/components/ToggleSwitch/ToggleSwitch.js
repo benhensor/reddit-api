@@ -9,8 +9,6 @@ export default function ToggleSwitch() {
     toggleTheme();
   };
 
-  console.log("Switch state:", switchState);
-
   return (
     <SwitchWrapper onClick={handleOnChange}>
       <HiddenCheckbox 

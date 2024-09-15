@@ -18,10 +18,6 @@ import { getProfileStyle } from '../../utils/getProfileStyle';
 export default function Comment({ comment }) {
 
   const [voteValue, setVoteValue] = useState(0);
-
-  console.log("Comment:", comment)
-
-
   /**
 	 * @param {number} newValue The new vote value
 	 */

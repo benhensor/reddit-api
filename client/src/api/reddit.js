@@ -22,5 +22,3 @@ export const getPostComments = async (permalink) => {
 
   return json[1].data.children.map((subreddit) => subreddit.data);
 };
-
-const getPostCommentsUrl = 'https://www.reddit.com/r/javascript/comments/oa7z3z.json';
