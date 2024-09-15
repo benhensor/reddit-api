@@ -9,7 +9,6 @@ import {
   fetchPosts,
   selectFilteredPosts,
   setSearchTerm,
-  fetchComments,
 } from '../../store/redditSlice';
 
 export default function Home () {

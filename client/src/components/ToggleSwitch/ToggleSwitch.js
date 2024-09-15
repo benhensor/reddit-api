@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { useTheme } from "../../context/ToggleThemeProvider";
 
-export default function ToggleSwitch({ onClick }) {
-  const [switchState, setSwitchState] = useState(true);
+export default function ToggleSwitch() {
+  const { toggleTheme, switchState } = useTheme();
 
   const handleOnChange = () => {
-    setSwitchState((prevState) => !prevState);
-    onClick();
+    toggleTheme();
   };
 
   console.log("Switch state:", switchState);

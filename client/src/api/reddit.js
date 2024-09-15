@@ -15,8 +15,12 @@ export const getSubreddits = async () => {
 };
 
 export const getPostComments = async (permalink) => {
+  const url = `${API_ROOT}${permalink}.json`;
+  console.log(url);
   const response = await fetch(`${API_ROOT}${permalink}.json`);
   const json = await response.json();
 
   return json[1].data.children.map((subreddit) => subreddit.data);
 };
+
+const getPostCommentsUrl = 'https://www.reddit.com/r/javascript/comments/oa7z3z.json';

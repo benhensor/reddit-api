@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useTheme } from "../../context/ToggleThemeProvider";
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import Avatar from '../Avatar/Avatar';
 import { LuShirt } from "react-icons/lu";
@@ -12,11 +13,15 @@ import { GrTarget } from "react-icons/gr";
 import { SlSettings } from "react-icons/sl";
 import { PiShieldPlus } from "react-icons/pi";
 
-export default function MobileMenu({ currentTheme, toggleTheme, username, profileStyle }) {
+export default function MobileMenu({ username, profileStyle }) {
 
-  const isLightMode = currentTheme === 'light'
-  const mode = isLightMode ? <MdOutlineDarkMode/> : <MdOutlineLightMode/> 
-  const modeText = isLightMode ? 'Dark Mode' : 'Light Mode'
+  const { currentTheme } = useTheme()
+
+  console.log("Current theme:", currentTheme)
+
+  const isLightMode = currentTheme.name === 'light'
+  const mode = isLightMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/> 
+  const modeText = isLightMode ? 'Light Mode' : 'Dark Mode'
 
   const MenuCard = ({icon, text}) => {
     return (
@@ -49,7 +54,7 @@ export default function MobileMenu({ currentTheme, toggleTheme, username, profil
         </CardContainer>
         <CardContainer>
           <MenuCard icon={mode} text={modeText} />
-          <ToggleSwitch onClick={toggleTheme} />
+          <ToggleSwitch />
         </CardContainer>
         <CardContainer>
           <MenuCard icon={<LuLogOut/>} text='Log Out' />

@@ -5,13 +5,13 @@ import Avatar from '../Avatar/Avatar'
 import AddIcon from '../../components/Icons/AddIcon'
 import MoreVertIcon from '../../components/Icons/MoreVertIcon'
 
-export default function UserControls({ isTabletView, toggleTheme, handleMobileMenu, profileStyle }) {
+export default function UserControls({ isTabletView, handleMobileMenu, profileStyle }) {
 
   const DesktopControls = () => {
     return (
       <>
         <CreatePost><AddIcon/>Create Post</CreatePost>
-        <ToggleSwitch onClick={toggleTheme} />
+        <ToggleSwitch />
         <Avatar profileStyle={profileStyle} />
       </>
     )

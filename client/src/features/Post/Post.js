@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { toggleShowingComments, fetchComments } from '../../store/redditSlice'
 import Skeleton from 'react-loading-skeleton'
 import { TiMessage } from 'react-icons/ti'
-import { LuShare } from 'react-icons/lu'
+import { PiShareFat } from "react-icons/pi";
 import {
 	PiArrowFatUp,
 	PiArrowFatUpBold,
@@ -259,7 +259,7 @@ export default function Post(props) {
 							</ButtonContainer>
 							<ButtonContainer onClick={handleToggleShare}>
 								<Button type="button" aria-label="Share">
-									<LuShare className="icon-action" />
+									<PiShareFat className="icon-action" />
 									<p>Share</p>
 								</Button>
 							</ButtonContainer>

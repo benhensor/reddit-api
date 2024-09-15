@@ -11,13 +11,10 @@ import { setSearchTerm } from '../../store/redditSlice'
 import { getProfileStyle } from '../../utils/getProfileStyle'
 
 export default function Header({
-	currentTheme,
-	toggleTheme,
 	toggleAside,
 	isSidebarVisible,
 }) {
 	const dispatch = useDispatch()
-
 	const [searchTermLocal, setSearchTermLocal] = useState('')
 	const searchTerm = useSelector((state) => state.reddit.searchTerm)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -94,7 +91,6 @@ export default function Header({
 				<UserControls
 					profileStyle={profileStyle}
 					isTabletView={isTabletView}
-					toggleTheme={toggleTheme}
 					handleMobileMenu={handleMobileMenu}
 				/>
 			</StyledHeader>
@@ -102,8 +98,6 @@ export default function Header({
 				<MobileMenuContainer $isVisible={isMobileMenuOpen}>
 					<MobileMenu
 						profileStyle={profileStyle}
-						currentTheme={currentTheme}
-						toggleTheme={toggleTheme}
 						username={null}
 					/>
 				</MobileMenuContainer>
