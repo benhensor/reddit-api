@@ -30,6 +30,9 @@ const CommentContainer = styled.div`
   padding: .8rem;
   transition: box-shadow 0.1s ease-in;
   border-radius: .4rem;
+  > div {
+    padding: 0 1rem;
+  }
   &:hover {
     box-shadow: 0 0 15px -3px rgba(0, 0, 0, 0.3),
     0 0 6px -2px rgba(0, 0, 0, 0.05) !important;
@@ -41,6 +44,7 @@ const Metadata = styled.div`
   margin-bottom: 1rem;
   align-items: center;
   gap: 1rem;
+  padding: 0;
 `
 
 const CreatedTime = styled.p`

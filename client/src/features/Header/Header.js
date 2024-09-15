@@ -62,40 +62,42 @@ export default function Header({
 	}
 
 	return (
-		<StyledHeader>
-			<Logo>
-				<MenuIcon
-					onClick={toggleAside}
-					isSidebarVisible={isSidebarVisible}
-				/>
-				<LogoFace onClick={handleRefresh} />
-				<LogoText onClick={handleRefresh} />
-			</Logo>
-			<Search>
-				<label htmlFor="search"></label>
-				<SearchIcon />
-				<span>
-					<input
-						type="text"
-						id="search"
-						placeholder="Search Reddit"
-						value={searchTermLocal}
-						onChange={onSearchTermChange}
-						aria-label="Search Posts"
-						onKeyDown={(e) => {
-							if (e.key === 'Enter') {
-								onSearchTermSubmit(e)
-							}
-						}}
+		<>
+			<StyledHeader>
+				<Logo>
+					<MenuIcon
+						onClick={toggleAside}
+						isSidebarVisible={isSidebarVisible}
 					/>
-				</span>
-			</Search>
-			<UserControls
-				profileStyle={profileStyle}
-				isTabletView={isTabletView}
-				toggleTheme={toggleTheme}
-				handleMobileMenu={handleMobileMenu}
-			/>
+					<LogoFace onClick={handleRefresh} />
+					<LogoText onClick={handleRefresh} />
+				</Logo>
+				<Search>
+					<label htmlFor="search"></label>
+					<SearchIcon />
+					<span>
+						<input
+							type="text"
+							id="search"
+							placeholder="Search Reddit"
+							value={searchTermLocal}
+							onChange={onSearchTermChange}
+							aria-label="Search Posts"
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									onSearchTermSubmit(e)
+								}
+							}}
+						/>
+					</span>
+				</Search>
+				<UserControls
+					profileStyle={profileStyle}
+					isTabletView={isTabletView}
+					toggleTheme={toggleTheme}
+					handleMobileMenu={handleMobileMenu}
+				/>
+			</StyledHeader>
 			{isMobileMenuOpen && (
 				<MobileMenuContainer $isVisible={isMobileMenuOpen}>
 					<MobileMenu
@@ -106,7 +108,7 @@ export default function Header({
 					/>
 				</MobileMenuContainer>
 			)}
-		</StyledHeader>
+		</>
 	)
 }
 
@@ -184,27 +186,20 @@ const Search = styled.div`
 `
 
 const MobileMenuContainer = styled.div`
-	position: fixed;
-	top: 6rem;
-	right: ${({ $isVisible }) => ($isVisible ? '0' : '-100%')};
-	width: 30rem;
-	overflow-y: auto;
-	border-left: 1px solid ${({ theme }) => theme.colors.border};
-	background-color: ${({ theme }) => theme.colors.menuBackground};
 	display: none;
-	flex-direction: column;
-	align-items: center;
-	transition: all 0.3s ease;
-	border-radius: 0 0 0 1rem;
-	z-index: 100;
-	transition: transform all 0.3s ease-in-out;
-	@media (max-width: 1199px) {
-		transform: translateX(
-			${({ $isVisible }) => ($isVisible ? '0' : '-100%')}
-		);
-	}
 	@media only screen and (max-width: 768px) {
 		display: flex;
+		position: absolute;
 		top: 5rem;
+		width: 30rem;
+		right: ${({ $isVisible }) => ($isVisible ? '0' : '-100%')};
+		border-left: 1px solid ${({ theme }) => theme.colors.border};
+		background-color: ${({ theme }) => theme.colors.menuBackground};
+		flex-direction: column;
+		align-items: center;
+		transition: right 0.3s ease;
+		border-radius: 0 0 0 1rem;
+		z-index: 10000;
 	}
-`
+`;
+

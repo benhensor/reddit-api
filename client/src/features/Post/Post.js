@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { toggleShowingComments, fetchComments } from '../../store/redditSlice';
+import { toggleShowingComments, fetchComments } from '../../store/redditSlice'
 import Skeleton from 'react-loading-skeleton'
 import { TiMessage } from 'react-icons/ti'
-import { LuShare } from "react-icons/lu";
+import { LuShare } from 'react-icons/lu'
 import {
 	PiArrowFatUp,
 	PiArrowFatUpBold,
@@ -15,20 +15,26 @@ import moment from 'moment'
 import shortenNumber from '../../utils/shortenNumber'
 import Comment from '../Comment/Comment'
 import Avatar from '../Avatar/Avatar'
-import { getProfileStyle } from '../../utils/getProfileStyle';
+import Facebook from '../../components/Socials/Facebook'
+import Twitter from '../../components/Socials/Twitter'
+import Instagram from '../../components/Socials/Instagram'
+import Tiktok from '../../components/Socials/Tiktok'
+import Whatsapp from '../../components/Socials/Whatsapp'
+import { getProfileStyle } from '../../utils/getProfileStyle'
 
 export default function Post(props) {
 	const dispatch = useDispatch()
 	const [voteValue, setVoteValue] = useState(0)
+	const [showShareWindow, setShowShareWindow] = useState(false)
 
 	const { post, index } = props
 
 	const handleToggleComments = () => {
-    dispatch(toggleShowingComments(index));
-    if (!post.showingComments) {
-      dispatch(fetchComments(index, post.permalink));
-    }
-  };
+		dispatch(toggleShowingComments(index))
+		if (!post.showingComments) {
+			dispatch(fetchComments(index, post.permalink))
+		}
+	}
 
 	/**
 	 * @param {number} newValue The new vote value
@@ -101,6 +107,95 @@ export default function Post(props) {
 		return null
 	}
 
+	const renderShareWindow = () => {
+		if (showShareWindow) {
+			return (
+				<ShareWindow>
+					<ShareWindowHeader>
+						<h2>Share this post</h2>
+						<CloseButton onClick={handleCloseShareWindow}>X</CloseButton>
+					</ShareWindowHeader>
+					<ShareWindowBody>
+						<p>Copy the link below to share:</p>
+						<input type="text" readOnly value={post.url} />
+						<button onClick={() => navigator.clipboard.writeText(post.url)}>
+							Copy Link
+						</button>
+						<p>Or share on social media:</p>
+						<SocialLinks>
+							<a
+								href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(post.url)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Twitter />
+							</a>
+							<a
+								href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(post.url)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Facebook />
+							</a>
+							<a
+								href={`mailto:?subject=Check this out&body=${encodeURIComponent(post.url)}`}
+							>
+								Email
+							</a>
+							<a
+								href={`https://www.instagram.com/?url=${encodeURIComponent(post.url)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Instagram />
+							</a>
+							<a
+								href={`https://www.tiktok.com/?url=${encodeURIComponent(post.url)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Tiktok />
+							</a>
+							<a
+								href={`https://api.whatsapp.com/send?text=${encodeURIComponent(post.url)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Whatsapp />
+							</a>
+						</SocialLinks>
+					</ShareWindowBody>
+				</ShareWindow>
+			)
+		}
+	}
+
+	const handleToggleShare = async () => {
+		if (showShareWindow) {
+			setShowShareWindow(false)
+			return
+		} else {
+			if (navigator.share) {
+				try {
+					await navigator.share({
+						title: post.title,
+						text: post.title,
+						url: post.url,
+					})
+					console.log('Successfully shared')
+				} catch (error) {
+					console.error('Error sharing:', error)
+				}
+			} else {
+				setShowShareWindow(true)
+			} 
+		}		
+	}
+
+	const handleCloseShareWindow = () => {
+		setShowShareWindow(false)
+	}
+
 	return (
 		<article key={post.id}>
 			<Card>
@@ -108,7 +203,7 @@ export default function Post(props) {
 					<PostContainer>
 						<PostHeader>
 							<Author>
-								<Avatar	profileStyle={getProfileStyle()}/>
+								<Avatar profileStyle={getProfileStyle()} />
 								<AuthorName>{post.author}</AuthorName>
 							</Author>
 							•
@@ -148,24 +243,22 @@ export default function Post(props) {
 									{renderDownVote()}
 								</Button>
 							</ButtonContainer>
-							<ButtonContainer>
+							<ButtonContainer
+								onClick={() =>
+									handleToggleComments(post.permalink)
+								}
+							>
 								<Button
 									type="button"
 									$isActive={post.showingComments}
-									onClick={() =>
-										handleToggleComments(post.permalink)
-									}
 									aria-label="Show comments"
 								>
-									<TiMessage style={{ fontSize: '2.4rem' }}/>
+									<TiMessage style={{ fontSize: '2.4rem' }} />
 								</Button>
 								{shortenNumber(post.num_comments, 1)}
 							</ButtonContainer>
-							<ButtonContainer>
-								<Button
-									type="button"
-									aria-label="Share"
-								>
+							<ButtonContainer onClick={handleToggleShare}>
+								<Button type="button" aria-label="Share">
 									<LuShare className="icon-action" />
 									<p>Share</p>
 								</Button>
@@ -173,12 +266,77 @@ export default function Post(props) {
 						</PostDetails>
 
 						{renderComments()}
+						{renderShareWindow()}
 					</PostContainer>
 				</PostWrapper>
 			</Card>
 		</article>
 	)
 }
+
+const ShareWindow = styled.div`
+	background: ${({ theme }) => theme.colors.background};
+	margin: 0.4rem 0;
+	padding: 0.8rem;
+	transition: box-shadow 0.1s ease-in;
+	border-radius: 0.4rem;
+	> div {
+		padding: 0 1rem;
+	}
+	&:hover {
+		box-shadow: 0 0 15px -3px rgba(0, 0, 0, 0.3),
+			0 0 6px -2px rgba(0, 0, 0, 0.05) !important;
+	}
+`
+
+const ShareWindowHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 8px;
+`
+
+const ShareWindowBody = styled.div`
+	padding: 16px 0;
+	text-align: center;
+
+	input {
+		width: 100%;
+		padding: 8px;
+		margin-bottom: 16px;
+	}
+
+	button {
+		padding: 8px 16px;
+		margin-bottom: 16px;
+		cursor: pointer;
+	}
+
+	p {
+		margin: 8px 0;
+	}
+`
+
+const SocialLinks = styled.div`
+	display: flex;
+	justify-content: space-around;
+
+	a {
+		width: 40px;
+		height: 40px;
+		text-decoration: none;
+		color: white;
+		border-radius: 4px;
+	}
+`
+
+const CloseButton = styled.button`
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+`
 
 const Card = styled.div`
 	background: ${({ theme }) => theme.colors.background};
@@ -296,16 +454,16 @@ const Button = styled.button`
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: ${({ theme, $isActive }) => ($isActive ? theme.colors.success : theme.colors.textParagraph)};
+	color: ${({ theme, $isActive }) =>
+		$isActive ? theme.colors.success : theme.colors.textParagraph};
 	display: flex;
 	align-items: center;
 	border-radius: var(--radius);
 	> p {
-		margin-left: .4rem;
-		padding: .35rem;
+		margin-left: 0.4rem;
+		padding: 0.35rem;
 		font-weight: bold;
 		font-size: 1.6rem;
-	
 	}
 `
 const VoteValue = styled.p`
@@ -320,5 +478,5 @@ const VoteValue = styled.p`
 `
 
 const ErrorMessage = styled.h3`
-	color: ${({ theme }) => (theme.colors.alert)};
+	color: ${({ theme }) => theme.colors.alert};
 `

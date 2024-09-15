@@ -14,7 +14,7 @@ export default function MenuIcon({ onClick, isSidebarVisible }) {
 
 const MenuBars = styled.div`
 	display: none;
-	@media only screen and (max-width: 768px) {
+	@media only screen and (max-width: 1199px) {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
