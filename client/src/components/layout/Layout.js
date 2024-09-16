@@ -41,7 +41,7 @@ const MobileMenuContainer = styled.div`
 	background: ${({ theme }) => theme.colors.background};
 	border-left: 1px solid ${({ theme }) => theme.colors.border};
 	border-radius: 0 0 0 1rem;
-	transform: translateX(${({ $isVisible }) => ($isVisible ? '100%' : '0')});
+	transform: translateX(${({ $isVisible }) => ($isVisible ? '0' : '100%')});
 	z-index: 1000;
 	transition: all 0.12s ease-in-out;
 	@media (max-width: 768px) {
