@@ -1,30 +1,25 @@
 import { useState, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import { useMenu } from '../../context/MenuContext'
 import MenuIcon from '../../components/Icons/MenuIcon'
 import LogoFace from '../../components/Icons/LogoFace'
 import LogoText from '../../components/Icons/LogoText'
 import SearchIcon from '../../components/Icons/SearchIcon'
 import UserControls from './UserControls'
-import MobileMenu from './MobileMenu'
 import { setSearchTerm } from '../../store/redditSlice'
 import { getProfileStyle } from '../../utils/getProfileStyle'
 
-export default function Header({
-	toggleAside,
-	isSidebarVisible,
-}) {
+export default function Header() {
 	const dispatch = useDispatch()
+	const { toggleAside } = useMenu()
 	const [searchTermLocal, setSearchTermLocal] = useState('')
 	const searchTerm = useSelector((state) => state.reddit.searchTerm)
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isTabletView, setIsTabletView] = useState(window.innerWidth <= 768)
 	const profileStyle = useMemo(() => getProfileStyle(), [])
-	
 
 	useEffect(() => {
 		const handleResize = () => {
-			if (window.innerWidth > 768) setIsMobileMenuOpen(false)
 			setIsTabletView(window.innerWidth <= 768)
 		}
 
@@ -35,10 +30,6 @@ export default function Header({
 			window.removeEventListener('resize', handleResize)
 		}
 	}, [])
-
-	const handleMobileMenu = () => {
-		setIsMobileMenuOpen(!isMobileMenuOpen)
-	}
 
 	const onSearchTermChange = (e) => {
 		setSearchTermLocal(e.target.value)
@@ -64,7 +55,7 @@ export default function Header({
 				<Logo>
 					<MenuIcon
 						onClick={toggleAside}
-						isSidebarVisible={isSidebarVisible}
+					
 					/>
 					<LogoFace onClick={handleRefresh} />
 					<LogoText onClick={handleRefresh} />
@@ -91,17 +82,8 @@ export default function Header({
 				<UserControls
 					profileStyle={profileStyle}
 					isTabletView={isTabletView}
-					handleMobileMenu={handleMobileMenu}
 				/>
 			</StyledHeader>
-			{isMobileMenuOpen && (
-				<MobileMenuContainer $isVisible={isMobileMenuOpen}>
-					<MobileMenu
-						profileStyle={profileStyle}
-						username={null}
-					/>
-				</MobileMenuContainer>
-			)}
 		</>
 	)
 }
@@ -178,22 +160,3 @@ const Search = styled.div`
 		margin: 0 2rem;
 	}
 `
-
-const MobileMenuContainer = styled.div`
-	display: none;
-	@media only screen and (max-width: 768px) {
-		display: flex;
-		position: absolute;
-		top: 5rem;
-		width: 30rem;
-		right: ${({ $isVisible }) => ($isVisible ? '0' : '-100%')};
-		border-left: 1px solid ${({ theme }) => theme.colors.border};
-		background-color: ${({ theme }) => theme.colors.menuBackground};
-		flex-direction: column;
-		align-items: center;
-		transition: right 0.3s ease;
-		border-radius: 0 0 0 1rem;
-		z-index: 10000;
-	}
-`;
-

@@ -17,8 +17,6 @@ export default function MobileMenu({ username, profileStyle }) {
 
   const { currentTheme } = useTheme()
 
-  console.log("Current theme:", currentTheme)
-
   const isLightMode = currentTheme.name === 'light'
   const mode = isLightMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/> 
   const modeText = isLightMode ? 'Light Mode' : 'Dark Mode'
@@ -108,7 +106,7 @@ const CardContainer = styled.div`
 const Card = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 0;
   cursor: pointer;
   > p {
     font-size: 1.4rem;

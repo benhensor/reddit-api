@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useMenu } from '../../context/MenuContext'
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch'
 import Avatar from '../Avatar/Avatar'
 import AddIcon from '../../components/Icons/AddIcon'
 import MoreVertIcon from '../../components/Icons/MoreVertIcon'
 
-export default function UserControls({ isTabletView, handleMobileMenu, profileStyle }) {
+export default function UserControls({ isTabletView, profileStyle }) {
+
+  const { toggleMobileMenu } = useMenu()
 
   const DesktopControls = () => {
     return (
@@ -20,7 +23,7 @@ export default function UserControls({ isTabletView, handleMobileMenu, profileSt
   const TabletControls = () => (
     <>
       <Avatar profileStyle={profileStyle} />
-      <MoreVertIcon onClick={handleMobileMenu}/>
+      <MoreVertIcon onClick={toggleMobileMenu}/>
     </>
   )
 
