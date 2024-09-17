@@ -3,6 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyles = createGlobalStyle`
 
 :root {
+
+  ::-webkit-scrollbar {display:none;}
+  
   --color-background: #fcfcfc;
   --color-background-secondary: #f3f3f3;
   --color-foreground: #ffffff;

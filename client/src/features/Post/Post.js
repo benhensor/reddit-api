@@ -300,19 +300,16 @@ const ShareWindowHeader = styled.div`
 const ShareWindowBody = styled.div`
 	padding: 16px 0;
 	text-align: center;
-
 	input {
 		width: 100%;
 		padding: 8px;
 		margin-bottom: 16px;
 	}
-
 	button {
 		padding: 8px 16px;
 		margin-bottom: 16px;
 		cursor: pointer;
 	}
-
 	p {
 		margin: 8px 0;
 	}
@@ -321,7 +318,6 @@ const ShareWindowBody = styled.div`
 const SocialLinks = styled.div`
 	display: flex;
 	justify-content: space-around;
-
 	a {
 		width: 40px;
 		height: 40px;
@@ -372,7 +368,6 @@ const Card = styled.div`
 	.down-vote.active {
 		color: var(--color-alert) !important;
 	}
-
 	.icon-action-button:hover {
 		background: var(--color-on-hover);
 	}
@@ -387,7 +382,7 @@ const Card = styled.div`
 
 const PostWrapper = styled.div`
 	display: flex;
-	border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+	// border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 	padding: 1rem;
 `
 const PostContainer = styled.div`

@@ -120,10 +120,13 @@ export default function Comment({ comment }) {
 
 const CommentContainer = styled.div`
   background: ${({ theme }) => theme.colors.background};
-  margin: .4rem 0;
-  padding: .8rem 0;
-  transition: box-shadow 0.1s ease-in;
-  border-radius: .4rem;
+  padding: .8rem;
+  transition: all 0.1s ease-in;
+	margin-bottom: .8rem;
+	border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+	&:last-of-type {
+		border-bottom: none;
+	}
   > div {
     padding: 0;
   }
